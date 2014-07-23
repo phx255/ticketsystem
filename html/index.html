@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html lang="en" ng-app="TicketsManagement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular TODO app</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body ng-controller="mainController">
+    <div class="container">
+
+        <!--Cabecera-->
+        <!--Lista de Tickets-->
+        <div class="navbar navbar-default navbar-static-top"
+             role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <span class="glyphicon glyphicon-headset"></span>
+                    Tickets&nbsp;<strong>Management</strong>
+                </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li data-match-route="/$"><a href="/">Tickets&nbsp;<span class="label label-info">{{ tickets.length }}</span></a></li>
+                <li data-match-route="/NewTicket"><a href="/NewTicket">Add</a></li>
+            </ul>
+
+        </div>
+        <div id="ticket-list" class="row">
+            <div class=".col-xs-12 .col-sm-6 .col-md-8">
+
+
+                    
+                    <table class="table .table-hover .table-bordered ">
+                        <thead>
+                            <tr>
+                                <td>id</td>
+                                <td>User</td>
+                                <td>Description</td>
+                                <td>Level</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ticket in tickets">
+                                <td>{{ ticket._id }}</td>
+                                <td>{{ ticket.username }}</td>
+                                <td>{{ ticket.description }} </td>
+                                <td>
+                                    <a href="\UpdateTicket\{{ ticket._id }}">
+                                        <div ng-switch on="ticket.level">
+                                            <div ng-switch-when="High">
+                                                <span class="label label-danger">{{ ticket.level }}</span>
+                                            </div>
+                                            <div ng-switch-when="Low">
+                                                <span class="label label-primary">{{ ticket.level }}</span>
+                                            </div>
+                                            <div ng-switch-when="Medium">
+                                                <span class="label label-warning">{{ ticket.level }}</span>
+                                            </div>
+                                            <div ng-switch-default>
+                                                <span class="label label-Primary">{{ ticket.level }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td><button class="btn btn-warning btn-xs" ng-click="RemoveTicket(ticket._id)">Delete</button></td>
+                                <td><a href="\UpdateTicket\{{ ticket._id }}" class="btn btn-primary btn-xs">Edit</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+    <script src="main.js"></script>
+
+
+</body>
+</html>

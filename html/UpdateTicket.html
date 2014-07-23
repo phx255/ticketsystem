@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html lang="en" ng-app="TicketsManagement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular TODO app</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css">
+    </head>
+<body ng-controller="mainController" ng-init="ticketId()">
+    
+    <div class="container">
+
+        <!--Cabecera-->
+        <!--Lista de Todos-->
+
+
+        <div class="navbar navbar-default navbar-static-top"
+             role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <span class="glyphicon glyphicon-headset"></span>
+                    Tickets&nbsp;<strong>Management</strong>
+                </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li data-match-route="/$"><a href="/">Tickets&nbsp;<span class="label label-info">{{ tickets.length }}</span></a></li>
+                <li data-match-route="/NewTicket"><a href="/NewTicket">Add</a></li>
+            </ul>
+
+        </div>
+
+        <!--Formulario para insertar nuevos Todo-->
+        <div id="ticket-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 ">
+                <div>
+                    <form>
+                        <div class="form-group">
+
+                            <input type="text" ng-model="formData._id" hidden />
+                            <input type="text" name="text" class="form-control"
+                                   placeholder="User Name" required
+                                   ng-model="formData.username">
+
+                            <textarea name="text" class="form-control " required
+                                      placeholder="Ticket description"
+                                      ng-model="formData.description"></textarea>
+
+
+                            <input type="datetime" name="text" class="form-control "
+                                   placeholder="Date Time"
+                                   ng-model="formData.datetime">
+
+                            <select name="level" ng-model="formData.level" class="selectpicker" id="levelpicker">
+                                <option value="">Select ticket priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" ng-click="UpdateTicket()">Update</button>
+
+                        <button class="btn btn-primary" ng-click="ticketId()">Get</button>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.js"></script>
+        <script src="/main.js"></script><!--Hay que poner la / por la ruta-->
+
+        <script type="text/javascript">
+
+
+            $(document).ready(function () {
+                $('.selectpicker').selectpicker({
+                    style: 'btn-primary',
+                });
+            });
+
+
+
+
+
+
+        </script>
+</body>
+
+</html>

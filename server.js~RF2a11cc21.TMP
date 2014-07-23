@@ -1,0 +1,95 @@
+﻿var express = require('express');
+var app = express();
+var mongoose = require('mongoose');
+
+
+// Conexión con la base de datos
+mongoose.connect('mongodb://cycleit:cycleit@ds055709.mongolab.com:55709/cycleitapp');
+
+
+// Configuración
+app.set(function () {
+    // Localización de los ficheros estáticos
+    app.use(express.static(__dirname + '/html'));
+    // Muestra un log de todos los request en la consola		
+    app.use(express.logger('dev'));
+    // Permite cambiar el HTML con el método POST					
+    //app.use(express.bodyParser());
+    app.use(express.json());
+    app.use(express.urlencoded());
+
+    // Simula DELETE y PUT						
+    app.use(express.methodOverride());
+    //app router
+    app.use(app.router);
+});
+
+
+// Definición de modelos
+var ticket = mongoose.model('tickets', {
+    text: String
+});
+
+
+
+// Escucha en el puerto 8080 y corre el server
+app.listen(8080, function() {
+    console.log('Escuchando en el puerto 8080.');
+});
+
+// Rutas de nuestro API
+// GET de todos los Tickets
+app.get('/api/tickets', function(req, res) {
+    ticket.find(function (err, tickets) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(tickets);
+    });
+});
+
+// POST que crea un TODO y devuelve todos tras la creación
+app.post('/api/tickets', function (req, res) {
+    console.log(req.body);
+    ticket.create({
+        text: req.body.text,
+        done: false
+    }, function (err, ticket) {
+        if (err) {
+            res.send(err);
+        }
+        
+        ticket.find(function (err, tickets) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(tickets);
+        });
+    });
+});
+
+// DELETE un TODO específico y devuelve todos tras borrarlo.
+app.delete('/api/tickets/:ticket', function(req, res) {
+    ticket.remove({
+        _id: req.params.ticket
+    }, function (err, ticket) {
+        if (err) {
+            res.send(err);
+        }
+        
+        ticket.find(function (err, tickets) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(tickets);
+        });
+
+    })
+});
+
+// Carga una vista HTML simple donde irá nuestra Single App Page
+// Angular Manejará el Frontend
+app.get('*', function(req, res) {
+    res.sendfile('./html/index.html');
+});
+

@@ -1,0 +1,17 @@
+{
+  "name": "NodejsWebApp1",
+  "version": "0.0.0",
+  "description": "NodejsWebApp1",
+  "main": "server.js",
+  "author": {
+    "name": "jgperez",
+    "email": "phx255@gmail.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "latest",
+    "method-override": "^2.1.1",
+    "mongoose": "latest",
+    "socket.io": "^1.0.6"
+  }
+}
