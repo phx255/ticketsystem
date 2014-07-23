@@ -36,7 +36,7 @@ var ticketsSchema = new mongoose.Schema({
 
 var ticket = mongoose.model('ticket', ticketsSchema);
 
-app.listen(5000, function () {
+app.listen(process.env.PORT || 5000, function () {
     console.log("Node server running on http://localhost:5000");
 });
 
