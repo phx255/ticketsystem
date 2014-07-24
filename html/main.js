@@ -93,7 +93,7 @@ angular.module('TicketsManagement')
         
 
         var date = new Date();
-        if (typeof  $scope.formData.msg != "") {
+        if (typeof  $scope.formData.msg !== "undefined" && $scope.formData.msg !== "") {
             $scope.formData.messages.push({ 'msg' : $scope.formData.msg, 'datetime': date, 'from': $scope.formData.from });
         }
         
