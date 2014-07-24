@@ -33,6 +33,7 @@ var ticketsSchema = new mongoose.Schema({
     status: String,
     messages: [
   {
+        from : { type: String },
         msg: { type: String },
         datetime: { type: Date }
     }]

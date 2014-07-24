@@ -30,17 +30,16 @@
                     <table class="table .table-hover .table-bordered ">
                         <thead>
                             <tr>
-                                <td>id</td>
+                                <td>status</td>
                                 <td>User</td>
                                 <td>Description</td>
-                                <td>Level</td>
-                                <td></td>
+                                <td>Priority</td>
                                 <td></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="ticket in tickets">
-                                <td>{{ ticket._id }}</td>
+                                <td>{{ ticket.status }}</td>
                                 <td>{{ ticket.username }}</td>
                                 <td ><div data-ng-bind-html="ticket.description "></div></td>
                                 <td>
@@ -61,8 +60,12 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td><button class="btn btn-warning btn-xs" ng-click="RemoveTicket(ticket._id)">Delete</button></td>
-                                <td><a href="\UpdateTicket\{{ ticket._id }}" class="btn btn-primary btn-xs">Edit</a></td>
+                                <td>
+                                    <button class="btn btn-warning btn-xs" ng-click="RemoveTicket(ticket._id)">Delete</button>
+
+                                    <a href="\UpdateTicket\{{ ticket._id }}" class="btn btn-primary btn-xs">Edit</a>
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>

@@ -92,27 +92,36 @@ angular.module('TicketsManagement')
         console.log($scope.formData);
         
 
-        var date=new Date();
-        $scope.formData.messages.push({ 'msg' : $scope.formData.msg, 'datetime': date });
+        var date = new Date();
+        if (typeof  $scope.formData.msg != "") {
+            $scope.formData.messages.push({ 'msg' : $scope.formData.msg, 'datetime': date, 'from': $scope.formData.from });
+        }
+        
+        $('#Message').hide();
+        $('html, body').animate({ scrollTop: $('#formdata').offset().top }, 'slow');
 
         $http.post('/api/tickets/' + $scope.formData._id, $scope.formData)
                     .success(function (data) {
-            $scope.formData = data;
-            $('#Message').hide();
-            $('html, body').animate({ scrollTop: $('#formdata').offset().top }, 'slow');
+            
+            $scope.formData = {};
+          
+           
+           
 
                       
         })
                     .error(function (data) {
             console.log('Error:' + data);
         });
+
+        $scope.ticketId();
     };
     
     
     
     //recoge el ticket de querystring
     $scope.ticketId = function () {
-        
+        console.log('Get Ticket');
         //parámetros querystring.
         var id = window.location.pathname.replace('/UpdateTicket/', '');
         if (id != null) {
@@ -135,6 +144,15 @@ angular.module('TicketsManagement')
             console.log('Error:' + data);
         });
     };
+    
+    //cambia la clase para el timeline
+    $scope.appliedClass = function (message) {
+        if (message.from === "helpdesk") {
+            return "timeline-inverted";
+        } else {
+            return "timeline"; // Or even "", which won't add any additional classes to the element
+        }
+    }
     
     
 
