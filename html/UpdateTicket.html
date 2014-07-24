@@ -6,6 +6,7 @@
     <title>Angular TODO app</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     </head>
 <body ng-controller="mainController" ng-init="ticketId()">
     
@@ -32,50 +33,89 @@
 
         <!--Formulario para insertar nuevos Todo-->
         <div id="ticket-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 ">
+            <div class="col-md-12">
                 <div>
-                    <form>
-                        <div class="form-group">
-
+                    <form id="formdata">
+                        
                             <input type="text" ng-model="formData._id" hidden />
-                            <input type="text" name="text" class="form-control"
-                                   placeholder="User Name" required
-                                   ng-model="formData.username">
-
-                            <textarea name="text" class="form-control " required
-                                      placeholder="Ticket description"
-                                      ng-model="formData.description"></textarea>
-
-
-                            <input type="datetime" name="text" class="form-control "
-                                   placeholder="Date Time"
-                                   ng-model="formData.datetime">
-
-                            <select name="level" ng-model="formData.level" class="selectpicker" id="levelpicker">
+                            <h3>{{ formData.username }} <small> {{ formData.datetime | date:'dd-MM-yyyy HH:mm' }} </small></h3>
+                        <div class="form-group">
+                            <div text-angular ng-model="formData.description" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select id="levelpicker" ng-model="formData.level" class="selectpicker">
                                 <option value="">Select ticket priority</option>
                                 <option value="High">High</option>
                                 <option value="Medium">Medium</option>
                                 <option value="Low">Low</option>
 
                             </select>
-                        </div>
-                        <button class="btn btn-primary" ng-click="UpdateTicket()">Update</button>
 
-                        <button class="btn btn-primary" ng-click="ticketId()">Get</button>
+                            <label>Status</label>
+                            <select id="statuspicker" ng-model="formData.status" class="selectpicker">
+                                <option value="open">Open</option>
+                                <option value="closed">Closed</option>
+                                <option value="running">Running</option>
+                                <option value="archived">Archived</option>
+
+                            </select>
+                            <div ng-controller="Alerter" id="Alerter">
+                                <button class="btn btn-success" ng-click="UpdateTicket();Alert('Ticket Updated');">Update Ticket</button>
+
+
+                            </div>
+                            </div>
+
+                            
+
+
+                        <div class="form-group">
+                            <h4>Last Messages <small> {{ formData.messages.length }}</small>  <button class="btn btn-primary" onclick="$('#Message').show(); $('html, body').animate({ scrollTop: $('#Message').offset().top }, 'slow');"><span class="glyphicon glyphicon-plus"></span> Add Message</button></h4>
+                            <div ng-repeat="message in formData.messages | orderBy : '-datetime'">
+
+                                <small ng-model="message.datetime"> {{ message.datetime | date:'dd-MM-yyyy HH:mm' }}</small> <div data-ng-bind-html="message.msg"> {{ message.msg }}</div>
+                            </div>
+                          
+
+                            </div>
+
+
+                        <div class="form-group">
+
+
+                            <div id="Message" style="display:none;">
+                                <h4>Type your Message to {{ formData.username }}</h4>
+                                <div id="UserMessage" text-angular ng-model="formData.msg">
+
+
+                                </div>
+                                <div ng-controller="Alerter" id="Alerter">
+                                    <button class="btn btn-success" ng-click="UpdateTicket();Alert('Message Send');">Send Message</button>
+                                    <button class="btn btn-default" onclick="$('#Message').hide();$('html, body').animate({ scrollTop: $('#formdata').offset().top }, 'slow');">Close</button>
+                                </div>
+                            </div>
+                            </div>
 
 
 
-                    </form>
+</form>
                 </div>
             </div>
         </div>
+        <div growl-notifications></div>
+
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.js"></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular-sanitize.min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular.min.js'></script>
+        <script src="/angular-sanitize.min.js"></script><!--Hay que poner la / por la ruta-->
+        <script src="/growl-notifications.min.js"></script><!--Hay que poner la / por la ruta-->
         <script src="/main.js"></script><!--Hay que poner la / por la ruta-->
-
+      
         <script type="text/javascript">
 
 

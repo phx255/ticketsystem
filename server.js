@@ -29,8 +29,17 @@ var ticketsSchema = new mongoose.Schema({
     description:  String ,
     username: String ,
     level: String,
-    summary:  String
+    summary: String,
+    status: String,
+    messages: [
+  {
+        msg: { type: String },
+        datetime: { type: Date }
+    }]
 });
+
+
+
 
 
 
@@ -72,8 +81,9 @@ app.get('/api/ticket/:ticket', function (req, res) {
     ticket.findById(req.params.ticket, function (err, ticket) {
         if (err) {
             res.send(err);
-        }
-        res.json(ticket);
+        }else { res.json(ticket); }
+
+        
     });
     
 
@@ -85,19 +95,19 @@ app.get('/api/ticket/:ticket', function (req, res) {
 // POST que crea un TODO y devuelve todos tras la creación
 app.post('/api/tickets', function (req, res) {
     console.log(req.body);
+    var date = new Date();
+
     ticket.create({
         username: req.body.username,
-        datetime: req.body.datetime,
+        datetime: date,
         description: req.body.description,
         level: req.body.level,
+        status: 'open',
         done: false
     }, function (err, ticket) {
         if (err) {
             res.send(err);
-        }
-        
-        
-        res.json(ticket);
+    }else { res.json(ticket); }
        
     });
 });
@@ -105,21 +115,23 @@ app.post('/api/tickets', function (req, res) {
 
 app.post('/api/tickets/:id', function (req, res) {
     
-    ticket.update({
-        
+    ticket.update(
+        { _id: req.params.id },//query
+        { //update parameters
         username: req.body.username,
         datetime: req.body.datetime,
         description: req.body.description,
         level: req.body.level,
-        done: false
-    }, function (err, ticket) {
+        status: req.body.status,
+        messages: req.body.messages
+        }
+        
+    , function (err, ticket) {
         if (err) {
             res.send(err);
         }
-        
-        
-        res.json(ticket);
        
+        
     });
 });
 
@@ -132,10 +144,7 @@ app.delete('/api/tickets/:ticket', function(req, res) {
     }, function (err, ticket) {
         if (err) {
             res.send(err);
-        }
-        
-
-        res.json(ticket);
+        }else { res.json(ticket); }
     })
 });
 

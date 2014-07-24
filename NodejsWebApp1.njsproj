@@ -30,8 +30,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="html\angular-sanitize.min.js" />
+    <Compile Include="html\growl-notifications.min.js" />
     <Compile Include="html\main.js" />
     <Compile Include="server.js" />
+    <Content Include="html\angular-sanitize.min.js.map" />
     <Content Include="html\index.html" />
     <Content Include="html\UpdateTicket.html" />
     <Content Include="html\NewTicket.html" />

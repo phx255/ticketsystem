@@ -6,6 +6,8 @@
     <title>Angular TODO app</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
     </head>
 <body ng-controller="mainController">
     <div class="container">
@@ -39,13 +41,10 @@
                                 <input type="text" name="text" class="form-control"
                                        placeholder="User Name" required
                                        ng-model="formData.username">
-                                 
-                                <textarea name="text" class="form-control " required
-                                          placeholder="Ticket description"
-                                          ng-model="formData.description"></textarea>
 
-                                <input class="form-control  " type="date" id="exampleInput" name="input" ng-model="formData.datetime"
-                                       placeholder="dd-MM-yyyy" required />
+                                <div text-angular ng-model="formData.description" required></div>
+
+
 
                                 <select name="level" ng-model="formData.level" class="selectpicker"> 
                                     <option value="">Select ticket priority</option>
@@ -59,7 +58,8 @@
                                     Required!
                                 </span>
                             </div>
-                            <button class="btn btn-primary" ng-click="AddTicket()">Add</button>
+
+                            <button class="btn btn-success" ng-click="AddTicket()">Add Ticket</button>
                         </form>
                     </div>
                 </div>
@@ -69,7 +69,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.js"></script>
-    <script src="main.js"></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular-sanitize.min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular.min.js'></script>
+        <script src="angular-sanitize.min.js"></script><!--Hay que poner la / por la ruta-->
+        <script src="growl-notifications.min.js"></script><!--Hay que poner la / por la ruta-->
+<script src="main.js"></script>
 <script type="text/javascript">
 
         $(document).ready(function () {

@@ -1,13 +1,24 @@
 ﻿//modulo AngularJS
-var TicketsManagement = angular.module('TicketsManagement', []).config(function ($locationProvider) {   $locationProvider.html5Mode(true).hashPrefix('!') });
+var TicketsManagement = angular.module('TicketsManagement', ['textAngular','growlNotifications', 'ngSanitize']).config(function ($locationProvider) {   $locationProvider.html5Mode(true).hashPrefix('!') });
 var id;
 
 
-//Controller principal de todas las páginas
-function mainController($scope, $http) {
+angular.module('TicketsManagement').controller('Alerter', ['$scope','growlNotifications', function ($scope,growlNotifications) {
+    
+    // Add a notification
+    
+    $scope.Alert = function (message,type) {
+        growlNotifications.add(message, type);
+    };
     
 
-   
+}]);
+
+
+angular.module('TicketsManagement')
+    .controller('mainController', ['$scope', '$http', function ($scope, $http) {
+    
+
     $scope.formData = {};
     
     // Cuando se cargue la página, pide del API de los tickets
@@ -19,6 +30,7 @@ function mainController($scope, $http) {
             .success(function (data) {
             $scope.tickets = data;
             console.log(data);
+
         })
             .error(function (data) {
             console.log('Error: ' + data);
@@ -35,14 +47,21 @@ function mainController($scope, $http) {
             
             //ponemos valores del select2
             $("#levelpicker").val(data.level);
+            $("#statuspicker").val(data.status);
+            
+            
+            
             $('.selectpicker').selectpicker('refresh');
+            
+            
+
             
             $scope.formData = data;
             
             //$('select[name=levelpicker]').val(data.level);
             
             
-            console.log(data.level);
+          
         })
     .error(function (data) {
             console.log('Error: ' + data);
@@ -56,8 +75,7 @@ function mainController($scope, $http) {
                     .success(function (data) {
             $scope.formData = {};
             $scope.tickets = data;
-            $scope.refreshTicket();
-            console.log(data);
+            window.location = "/"
 
         })
 
@@ -71,18 +89,25 @@ function mainController($scope, $http) {
     
     // Actualiza un ticket
     $scope.UpdateTicket = function (id) {
+        console.log($scope.formData);
         
-        $http.post('/api/tickets/' + $scope.formData._id)
+
+        var date=new Date();
+        $scope.formData.messages.push({ 'msg' : $scope.formData.msg, 'datetime': date });
+
+        $http.post('/api/tickets/' + $scope.formData._id, $scope.formData)
                     .success(function (data) {
-            $scope.tickets = data;
-            $scope.refreshTicket();
+            $scope.formData = data;
+            $('#Message').hide();
+            $('html, body').animate({ scrollTop: $('#formdata').offset().top }, 'slow');
+
                       
         })
                     .error(function (data) {
             console.log('Error:' + data);
         });
     };
-
+    
     
     
     //recoge el ticket de querystring
@@ -96,7 +121,7 @@ function mainController($scope, $http) {
         
 
     }
-
+    
     
     // Borra un ticket
     $scope.RemoveTicket = function (id) {
@@ -110,9 +135,12 @@ function mainController($scope, $http) {
             console.log('Error:' + data);
         });
     };
+    
+    
 
+    
+    $scope.refreshTicket();
 
-     $scope.refreshTicket();
+}]);
   
-}
 

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Angular TODO app</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
 <body ng-controller="mainController">
     <div class="container">
-
         <!--Cabecera-->
         <!--Lista de Tickets-->
         <div class="navbar navbar-default navbar-static-top"
@@ -26,10 +26,7 @@
 
         </div>
         <div id="ticket-list" class="row">
-            <div class=".col-xs-12 .col-sm-6 .col-md-8">
 
-
-                    
                     <table class="table .table-hover .table-bordered ">
                         <thead>
                             <tr>
@@ -45,7 +42,7 @@
                             <tr ng-repeat="ticket in tickets">
                                 <td>{{ ticket._id }}</td>
                                 <td>{{ ticket.username }}</td>
-                                <td>{{ ticket.description }} </td>
+                                <td ><div data-ng-bind-html="ticket.description "></div></td>
                                 <td>
                                     <a href="\UpdateTicket\{{ ticket._id }}">
                                         <div ng-switch on="ticket.level">
@@ -74,12 +71,16 @@
 
 
 
-            </div>
+
         </div>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular-sanitize.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.1/textAngular.min.js'></script>
+    <script src="angular-sanitize.min.js"></script><!--Hay que poner la / por la ruta-->
+    <script src="growl-notifications.min.js"></script><!--Hay que poner la / por la ruta-->
     <script src="main.js"></script>
 
 
