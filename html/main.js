@@ -103,8 +103,8 @@ angular.module('TicketsManagement')
         $http.post('/api/tickets/' + $scope.formData._id, $scope.formData)
                     .success(function (data) {
             
-            $scope.formData = {};
           
+           
            
            
 
@@ -113,7 +113,7 @@ angular.module('TicketsManagement')
                     .error(function (data) {
             console.log('Error:' + data);
         });
-
+        $scope.formData = {};
         $scope.ticketId();
     };
     
